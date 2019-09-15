@@ -6,14 +6,30 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
+    <style>
+      .invisible {
+        visibility: hidden;
+      }
+    </style>
   </head>
   <body>
-    <h1>AN APP</h1>
-    <p>
-      <div class="mdl-spinner mdl-js-spinner" id="load-spinner"></div>
-      You probably want to open your console.
-    </p>
-    <div id="event-target"></div>
+    <div class="mdl-card mdl-shadow--2dp" id="card-a">
+      <div
+        class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
+        id="load-spinner"
+      ></div>
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__text">Hello</h2>
+        <div
+          class="mdl-spinner mdl-js-spinner is-active invisible"
+          id="load-spinner2"
+        ></div>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis
+        pellentesque lacus eleifend lacinia...
+      </div>
+    </div>
 
     <script src="scripts/material.min.js"></script>
     <script src="scripts/index.min.js"></script>

@@ -1,14 +1,21 @@
 var babel = require("gulp-babel");
+var browserify = require("browserify");
+var buffer = require('vinyl-buffer');
 var connect = require("gulp-connect");
 var del = require("del");
 var gulp = require("gulp");
-var rename = require("gulp-rename");
+var source = require('vinyl-source-stream');
 var sourcemaps = require("gulp-sourcemaps");
-var terser = require("gulp-terser");
+var uglify = require("gulp-uglify");
 
-gulp.task("build:scripts", () =>
-  gulp
-    .src("./src/scripts/*.js")
+gulp.task("build:scripts", () => {
+  var b = browserify({
+    entries: "./src/scripts/index.js",
+  });
+
+  return b.bundle()
+    .pipe(source("index.min.js"))
+    .pipe(buffer())
     .pipe(sourcemaps.init())
     .pipe(
       babel({
@@ -23,18 +30,10 @@ gulp.task("build:scripts", () =>
         plugins: ["@babel/plugin-proposal-class-properties"]
       })
     )
-    .pipe(
-      terser({
-        keep_fnames: false,
-        mangle: {
-          toplevel: true
-        }
-      })
-    )
-    .pipe(rename(path => (path.basename += ".min")))
+    .pipe(uglify())
     .pipe(sourcemaps.write("./"))
-    .pipe(gulp.dest("./dist/scripts"))
-);
+    .pipe(gulp.dest("./dist/scripts"));
+});
 
 gulp.task("clean:all", () => del("dist/*"));
 
